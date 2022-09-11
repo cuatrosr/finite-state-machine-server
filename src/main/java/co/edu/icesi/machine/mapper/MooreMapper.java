@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 public interface MooreMapper {
 
     Moore fromDTO(MooreDTO machineDTO);
-    MooreDTO fromMachine(Moore machineDTO);
+    MooreDTO fromMoore(Moore machineDTO);
 }

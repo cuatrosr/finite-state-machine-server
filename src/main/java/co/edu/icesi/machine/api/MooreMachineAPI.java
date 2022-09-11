@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/machine/moore")
 public interface MooreMachineAPI {
 
-    @PostMapping()
-    MooreDTO relatedMachine(@RequestBody MooreDTO machineDTO);
+    @PostMapping("/related")
+    MooreDTO relatedMachine(@RequestBody MooreDTO mooreDTO);
+    @PostMapping("/minimum")
+    MooreDTO minimumMachine(@RequestBody MooreDTO mooreDTO);
 }

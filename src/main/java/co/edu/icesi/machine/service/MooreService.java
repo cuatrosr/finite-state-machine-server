@@ -6,4 +6,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MooreService {
 
     Moore relatedMachine(@RequestBody Moore moore);
+    Moore minimumMachine(@RequestBody Moore moore);
 }

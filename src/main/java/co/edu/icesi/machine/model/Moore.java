@@ -1,13 +1,14 @@
 package co.edu.icesi.machine.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class Moore {
     private String initialState;

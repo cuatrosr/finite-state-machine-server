@@ -15,8 +15,12 @@ public class MooreMachineController implements MooreMachineAPI {
     public final MooreMapper mooreMapper;
 
     @Override
-    public MooreDTO relatedMachine(MooreDTO machineDTO) {
-        System.out.println(mooreService.relatedMachine(mooreMapper.fromDTO(machineDTO)));
-        return null;
+    public MooreDTO relatedMachine(MooreDTO mooreDTO) {
+        return mooreMapper.fromMoore(mooreService.relatedMachine(mooreMapper.fromDTO(mooreDTO)));
+    }
+
+    @Override
+    public MooreDTO minimumMachine(MooreDTO mooreDTO) {
+        return mooreMapper.fromMoore(mooreService.minimumMachine(mooreMapper.fromDTO(mooreDTO)));
     }
 }
