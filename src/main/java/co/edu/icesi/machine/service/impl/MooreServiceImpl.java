@@ -36,23 +36,16 @@ public class MooreServiceImpl implements MooreService {
 
     public Moore minimumMachine(Moore moore) {
         List<List<MooreState>> partition = getInitialPartition(moore);
-        for (List<MooreState> l:partition) {
-            System.out.print(l.stream().map(MooreState::getRoot).collect(Collectors.toList()));
-        }
-        System.out.println();
+        List<List<MooreState>> newPartition;
         do {
-            List<List<MooreState>> newPartition = partitionedMachine(partition, moore);
-            for (List<MooreState> l:newPartition) {
-                System.out.print(l.stream().map(MooreState::getRoot).collect(Collectors.toList()));
-            }
-            System.out.println();
+            newPartition = partitionedMachine(partition);
             if (!newPartition.equals(partition)) {
                 partition = newPartition;
             } else {
                 break;
             }
         } while (true);
-        return null;
+        return createNewMoore(newPartition, moore);
     }
 
     private List<List<MooreState>> getInitialPartition(Moore moore) {
@@ -69,7 +62,7 @@ public class MooreServiceImpl implements MooreService {
         return partition;
     }
 
-    private List<List<MooreState>> partitionedMachine(List<List<MooreState>> partition, Moore moore) {
+    private List<List<MooreState>> partitionedMachine(List<List<MooreState>> partition) {
         List<List<MooreState>> newPartition = new ArrayList<>();
         for (List<MooreState> list:partition) {
             List<List<MooreState>> groups = new ArrayList<>();
@@ -117,5 +110,32 @@ public class MooreServiceImpl implements MooreService {
                 return true;
         }
         return false;
+    }
+
+    private Moore createNewMoore(List<List<MooreState>> partition, Moore moore) {
+        String prefix = "q";
+        int count = 0;
+        List<String> names = new ArrayList<>();
+        for (List<MooreState> ignored :partition) {
+            names.add(prefix + count++);
+        }
+        List<MooreState> states = new ArrayList<>();
+        for (int i = 0; i < partition.size(); i++) {
+            List<String> sets = new ArrayList<>();
+            for (int j = 0; j < partition.get(i).get(0).getStates().size(); j++) {
+                int aux = 0;
+                for (List<MooreState> s:partition) {
+                    int finalI = i;
+                    int finalJ = j;
+                    if (s.stream().anyMatch(e -> e.getRoot().contains(partition.get(finalI).get(0).getStates().get(finalJ)))) {
+                        sets.add(names.get(aux));
+                        break;
+                    }
+                    aux++;
+                }
+            }
+            states.add(MooreState.builder().root(names.get(i)).response(partition.get(i).get(0).getResponse()).states(sets).build());
+        }
+        return Moore.builder().initialState(names.get(0)).stimulus(moore.getStimulus()).states(states).build();
     }
 }
