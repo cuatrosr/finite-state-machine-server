@@ -47,16 +47,13 @@ public class MooreServiceImpl implements MooreService {
     }
 
     private List<List<MooreState>> partitionMoore(Moore moore) {
-        List<List<MooreState>> partition = getInitialPartition(moore);
-        List<List<MooreState>> newPartition;
-        do {
-            newPartition = partitionedMachine(partition);
-            if (!newPartition.equals(partition)) {
-                partition = newPartition;
-            } else {
-                break;
-            }
-        } while (true);
+        return getPartitions(getInitialPartition(moore));
+    }
+
+    private List<List<MooreState>> getPartitions(List<List<MooreState>> partition) {
+        List<List<MooreState>> newPartition = partitionedMachine(partition);
+        if (!newPartition.equals(partition))
+            return getPartitions(newPartition);
         return newPartition;
     }
 
@@ -97,8 +94,7 @@ public class MooreServiceImpl implements MooreService {
                 for (int j = 0; j < list.get(i).getStates().size(); j++) {
                     String a = list.get(0).getStates().get(j);
                     String b = list.get(i).getStates().get(j);
-                    boolean adjunct = searchGroups(a, b, partition);
-                    if (!adjunct) {
+                    if (!searchGroups(a, b, partition)) {
                         if (groups.isEmpty()) {
                             groups.add(new ArrayList<>(Collections.nCopies(1, list.get(i))));
                         } else {
@@ -108,8 +104,7 @@ public class MooreServiceImpl implements MooreService {
                                     for (int l = 0; l < group.get(k).getStates().size() && !added; l++) {
                                         String c = list.get(i).getStates().get(l);
                                         String d = group.get(k).getStates().get(l);
-                                        boolean result = searchGroups(c, d, partition);
-                                        if (result) {
+                                        if (searchGroups(c, d, partition)) {
                                             group.add(list.get(i));
                                             added = true;
                                         }

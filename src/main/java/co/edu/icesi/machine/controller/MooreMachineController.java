@@ -33,22 +33,41 @@ public class MooreMachineController implements MooreMachineAPI {
 
     @Override
     public EquivalentMooreDTO equivalentMachine(List<MooreDTO> mooreDTOList) {
+        renameStates(mooreDTOList);
+        List<MooreState> states = groupStatesByMachine(mooreDTOList);
+        List<List<String>> roots = groupRoots(mooreDTOList);
+        List<String> initialStates = groupInitialStates(mooreDTOList);
+        EquivalentMooreDTO equivalentMooreDTO = EquivalentMooreDTO.builder().initialStates(initialStates).stimulus(mooreDTOList.get(0).getStimulus()).states(states).build();
+        return mooreService.equivalentMachine(equivalentMooreDTO, roots);
+    }
+
+    private void renameStates(List<MooreDTO> mooreDTOList) {
         int lengthFirst = mooreDTOList.get(0).getStates().size();
         mooreDTOList.get(1).setInitialState("q" + lengthFirst);
-        for (MooreState item:mooreDTOList.get(1).getStates()) {
+        for (MooreState item : mooreDTOList.get(1).getStates()) {
             item.setRoot("q" + (Integer.parseInt(item.getRoot().substring(1)) + lengthFirst));
             List<String> newStates = new ArrayList<>();
-            for (String states:item.getStates()) {
+            for (String states : item.getStates()) {
                 newStates.add("q" + (Integer.parseInt(states.substring(1)) + lengthFirst));
             }
             item.setStates(newStates);
         }
+    }
+
+    private List<MooreState> groupStatesByMachine(List<MooreDTO> mooreDTOList) {
         List<MooreState> states = new ArrayList<>();
         states.addAll(mooreDTOList.get(0).getStates());
         states.addAll(mooreDTOList.get(1).getStates());
+        return states;
+    }
+
+    private List<List<String>> groupRoots(List<MooreDTO> mooreDTOList) {
         List<String> rootFirst = mooreDTOList.get(0).getStates().stream().map(MooreState::getRoot).collect(Collectors.toList());
         List<String> rootSecond = mooreDTOList.get(1).getStates().stream().map(MooreState::getRoot).collect(Collectors.toList());
-        EquivalentMooreDTO equivalentMooreDTO = EquivalentMooreDTO.builder().initialStates(Arrays.asList(mooreDTOList.get(0).getInitialState(), mooreDTOList.get(1).getInitialState())).stimulus(mooreDTOList.get(0).getStimulus()).states(states).build();
-        return mooreService.equivalentMachine(equivalentMooreDTO, Arrays.asList(rootFirst, rootSecond));
+        return Arrays.asList(rootFirst, rootSecond);
+    }
+
+    private List<String> groupInitialStates(List<MooreDTO> mooreDTOList) {
+        return Arrays.asList(mooreDTOList.get(0).getInitialState(), mooreDTOList.get(1).getInitialState());
     }
 }
