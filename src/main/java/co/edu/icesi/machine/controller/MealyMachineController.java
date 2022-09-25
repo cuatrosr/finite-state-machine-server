@@ -2,6 +2,7 @@ package co.edu.icesi.machine.controller;
 
 import co.edu.icesi.machine.api.MealyMachineAPI;
 import co.edu.icesi.machine.dto.MealyDTO;
+import co.edu.icesi.machine.dto.MooreDTO;
 import co.edu.icesi.machine.mapper.MachineMapper;
 import co.edu.icesi.machine.service.MealyService;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,10 @@ public class MealyMachineController implements MealyMachineAPI {
     @Override
     public MealyDTO relatedMachine(MealyDTO mealyDTO) {
         return machineMapper.fromMealy(mealyService.relatedMachine(machineMapper.fromMealyDTO(mealyDTO)));
+    }
+
+    @Override
+    public MealyDTO minimumMachine(MealyDTO mealyDTO) {
+        return machineMapper.fromMealy(mealyService.minimumMachine(machineMapper.fromMealyDTO(mealyDTO)));
     }
 }

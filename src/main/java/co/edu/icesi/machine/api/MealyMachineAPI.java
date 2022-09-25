@@ -10,4 +10,7 @@ public interface MealyMachineAPI {
 
     @PostMapping("/related")
     MealyDTO relatedMachine(@RequestBody MealyDTO mealyDTO);
+
+    @PostMapping("/minimum")
+    MealyDTO minimumMachine(@RequestBody MealyDTO mealyDTO);
 }

@@ -6,4 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MealyService {
 
     Mealy relatedMachine(@RequestBody Mealy mealy);
+
+    Mealy minimumMachine(@RequestBody Mealy mealy);
 }

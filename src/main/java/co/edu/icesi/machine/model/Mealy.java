@@ -1,12 +1,14 @@
 package co.edu.icesi.machine.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 import java.util.Objects;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class Mealy {
     private String initialState;
