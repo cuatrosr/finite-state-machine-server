@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class MealyStates {
     private String root;
-    private List<MealySate> states;
+    private List<MealyState> states;
 }

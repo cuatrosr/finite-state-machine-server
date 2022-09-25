@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface MealyMachineAPI {
 
     @PostMapping("/related")
-    MealyDTO createMachine(@RequestBody MealyDTO mealyDTO);
+    MealyDTO relatedMachine(@RequestBody MealyDTO mealyDTO);
 }

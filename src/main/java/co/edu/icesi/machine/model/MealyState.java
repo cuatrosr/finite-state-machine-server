@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MealySate {
+public class MealyState {
     private String state;
     private String response;
 }
