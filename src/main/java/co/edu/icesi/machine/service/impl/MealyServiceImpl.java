@@ -1,5 +1,6 @@
 package co.edu.icesi.machine.service.impl;
 
+import co.edu.icesi.machine.dto.EquivalentMealyDTO;
 import co.edu.icesi.machine.model.*;
 import co.edu.icesi.machine.service.MealyService;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,25 @@ public class MealyServiceImpl implements MealyService {
     public Mealy minimumMachine(Mealy mealy) {
         List<List<MealyStates>> partition = partitionMealy(mealy);
         return createNewMealy(partition, mealy);
+    }
+
+    @Override
+    public EquivalentMealyDTO equivalentMachine(EquivalentMealyDTO mealyDTO, List<List<String>> states) {
+        Mealy tempMealy = Mealy.builder().stimulus(mealyDTO.getStimulus()).states(mealyDTO.getStates()).build();
+        List<List<MealyStates>> partition = partitionMealy(tempMealy);
+        if (searchGroups(mealyDTO.getInitialStates().get(0), mealyDTO.getInitialStates().get(1), partition)) {
+            for (List<MealyStates> groups : partition) {
+                if (groups.stream().noneMatch(e -> states.get(0).contains(e.getRoot())) ||
+                        groups.stream().noneMatch(e -> states.get(1).contains(e.getRoot()))) {
+                    mealyDTO.setResponse(false);
+                    return mealyDTO;
+                }
+            }
+            mealyDTO.setResponse(true);
+            return mealyDTO;
+        }
+        mealyDTO.setResponse(false);
+        return mealyDTO;
     }
 
     private List<List<MealyStates>> partitionMealy(Mealy mealy) {
@@ -116,6 +136,15 @@ public class MealyServiceImpl implements MealyService {
         for (List<MealyStates> list : partition) {
             if (list.stream().anyMatch(e -> e.getRoot().equals(a.getState())) &&
                     list.stream().anyMatch(e -> e.getRoot().equals(b.getState())))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean searchGroups(String a, String b, List<List<MealyStates>> partition) {
+        for (List<MealyStates> list : partition) {
+            if (list.stream().anyMatch(e -> e.getRoot().equals(a)) &&
+                    list.stream().anyMatch(e -> e.getRoot().equals(b)))
                 return true;
         }
         return false;
