@@ -106,8 +106,9 @@ public class MealyServiceImpl implements MealyService {
                     }
                 }
             }
-            groups.forEach(list::removeAll);
-            newPartition.add(list);
+            List<MealyStates> temp = new ArrayList<>(list);
+            groups.forEach(temp::removeAll);
+            newPartition.add(temp);
             newPartition.addAll(groups);
         }
         return newPartition;
