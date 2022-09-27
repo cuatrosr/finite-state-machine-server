@@ -1,7 +1,7 @@
 # ***Finite State Machine | Back End*** 💻️
 
 <p style="text-align: justify">
-    <i>Web application that allows it to get a related or minimum mealy machine and decide if two machines are equivalent</i>
+    <i>Web application that allows it to get a related or minimum mealy or moore machine</i>
 </p>
 
 ## ***Build With*** 🛠️
@@ -91,14 +91,13 @@
 }
 ```
 
-*For Any Equivalent Machine validation just need an array of the two machines*
-
 *There's a postman collection for test purposes [here]()*
 
 ## ***Author*** ✒️
 
 <div style="text-align: left">
     <a href="https://github.com/cuatrosr" target="_blank"> <img alt="cuatrosr" src="https://images.weserv.nl/?url=avatars.githubusercontent.com/u/70908378?v=4&h=60&w=60&fit=cover&mask=circle"></a>
+    <a href="https://github.com/santiagoarevalo" target="_blank"> <img alt="santiagoarevalo" src="https://images.weserv.nl/?url=avatars.githubusercontent.com/u/71450411?v=4&h=60&w=60&fit=cover&mask=circle"></a>
 </div>
 
 ---
