@@ -15,7 +15,7 @@ public class MooreMachineController implements MooreMachineAPI {
     private final MachineMapper machineMapper;
 
     /**
-     * Return Moore's machine with inaccessible states removed
+     * Return Moore's DTO machine with inaccessible states removed
     @param mooreDTO the moore machine in Data Transfer Object
     @return the moore DTO with the moore machine
      */
