@@ -14,10 +14,20 @@ public class MooreMachineController implements MooreMachineAPI {
     private final MooreService mooreService;
     private final MachineMapper machineMapper;
 
+    /*
+    @param mooreDTO the moore machine in Data Transfer Object
+    @return the moore DTO with the moore machine
+     */
+
     @Override
     public MooreDTO relatedMachine(MooreDTO mooreDTO) {
         return machineMapper.fromMoore(mooreService.relatedMachine(machineMapper.fromMooreDTO(mooreDTO)));
     }
+
+    /*
+    @param mooreDTO the moore machine in Data Transfer Object
+    @return the moore DTO with the moore machine
+     */
 
     @Override
     public MooreDTO minimumMachine(MooreDTO mooreDTO) {
