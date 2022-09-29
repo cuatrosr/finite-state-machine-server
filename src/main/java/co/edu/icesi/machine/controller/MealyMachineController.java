@@ -14,10 +14,23 @@ public class MealyMachineController implements MealyMachineAPI {
     private final MealyService mealyService;
     private final MachineMapper machineMapper;
 
+    /**
+     * Return Mealy's machine with inaccessible states removed
+     @param mealyDTO the moore machine in Data Transfer Object
+     @return the mealy DTO with the mealy machine without inaccessible states
+     */
+
     @Override
     public MealyDTO relatedMachine(MealyDTO mealyDTO) {
         return machineMapper.fromMealy(mealyService.relatedMachine(machineMapper.fromMealyDTO(mealyDTO)));
     }
+
+    /**
+     * Returns the minimized Mealy's machine, by means of other auxiliary methods such as partitioning
+     * that are in the minimization algorithm.
+     @param mealyDTO the mealy machine to minimize in Data Transfer Object
+     @return the mealy DTO with the mealy machine minimized
+     */
 
     @Override
     public MealyDTO minimumMachine(MealyDTO mealyDTO) {

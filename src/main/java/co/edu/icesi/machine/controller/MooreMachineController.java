@@ -14,7 +14,8 @@ public class MooreMachineController implements MooreMachineAPI {
     private final MooreService mooreService;
     private final MachineMapper machineMapper;
 
-    /*
+    /**
+     * Return Moore's machine with inaccessible states removed
     @param mooreDTO the moore machine in Data Transfer Object
     @return the moore DTO with the moore machine
      */
@@ -24,9 +25,11 @@ public class MooreMachineController implements MooreMachineAPI {
         return machineMapper.fromMoore(mooreService.relatedMachine(machineMapper.fromMooreDTO(mooreDTO)));
     }
 
-    /*
-    @param mooreDTO the moore machine in Data Transfer Object
-    @return the moore DTO with the moore machine
+    /**
+     * Returns the minimized Moore's machine, by means of other auxiliary methods such as partitioning
+     * that are in the minimization algorithm.
+    @param mooreDTO the moore machine to minimize in Data Transfer Object
+    @return the moore DTO with the moore machine minimized
      */
 
     @Override
