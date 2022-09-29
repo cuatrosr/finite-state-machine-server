@@ -13,6 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class MealyServiceImpl implements MealyService {
 
+    /**
+     * Return Mealy's machine with inaccessible states removed
+     * @param mealy the moore machine to relate
+     * @return the mealy machine related without inaccessible states
+     */
+
     @Override
     public Mealy relatedMachine(@RequestBody Mealy mealy) {
         String initialState = mealy.getInitialState();
@@ -21,6 +27,12 @@ public class MealyServiceImpl implements MealyService {
         states.forEach(mealy::removeRelationsState);
         return mealy;
     }
+
+    /**
+     * Returns the minimized Mealy's machine
+     @param mealy the moore machine to minimize
+     @return the mealy machine minimized
+     */
 
     @Override
     public Mealy minimumMachine(Mealy mealy) {
