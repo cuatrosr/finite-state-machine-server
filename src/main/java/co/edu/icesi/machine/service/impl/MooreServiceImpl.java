@@ -11,6 +11,12 @@ import java.util.stream.Collectors;
 @Service
 public class MooreServiceImpl implements MooreService {
 
+    /**
+     * Return Moore's machine with inaccessible states removed
+     * @param moore the moore machine to relate
+     * @return the moore machine related without inaccessible states
+     */
+
     @Override
     public Moore relatedMachine(Moore moore) {
         String initialState = moore.getInitialState();
@@ -20,6 +26,12 @@ public class MooreServiceImpl implements MooreService {
         return moore;
     }
 
+    /**
+     * Returns the minimized Moore's machine
+     @param moore the moore machine to minimize
+     @return the moore machine minimized
+     */
+
     @Override
     public Moore minimumMachine(Moore moore) {
         moore = relatedMachine(moore);
@@ -27,6 +39,12 @@ public class MooreServiceImpl implements MooreService {
         List<List<MooreState>> partition = partitionMoore(moore, responses);
         return createNewMoore(partition, moore);
     }
+
+    /**
+     * Gets the set of state's outputs of the moore machine
+     * @param moore moore machine from which the set of outputs is to be obtained
+     * @return a list with the set of state's outputs of the moore machine
+     */
 
     private List<String> getResponses(Moore moore) {
         List<String> res = new ArrayList<>();
@@ -36,6 +54,8 @@ public class MooreServiceImpl implements MooreService {
         });
         return res;
     }
+
+
 
     private List<List<MooreState>> partitionMoore(Moore moore, List<String> responses) {
         return getPartitions(getInitialPartition(moore, responses));
