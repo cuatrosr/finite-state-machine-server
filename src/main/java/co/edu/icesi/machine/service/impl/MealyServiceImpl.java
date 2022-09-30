@@ -41,9 +41,22 @@ public class MealyServiceImpl implements MealyService {
         return createNewMealy(partition, mealy);
     }
 
+    /**
+     * Base method that calls the recursive method that performs the partitioning of the Mealy machine
+     * @param mealy Mealy machine to be partitioned
+     * @return Set of state blocks of the Mealy machine representing the final partition
+     */
+
     private List<List<MealyStates>> partitionMealy(Mealy mealy) {
         return getPartitions(getInitialPartition(mealy));
     }
+
+    /**
+     * Recursive method that implements the partitioning algorithm,
+     * reviewing the outputs of each state and grouping them together.
+     * @param partition Set of state blocks of the Mealy machine representing each one of the partitions
+     * @return the set of state blocks of the Mealy machine representing the partition in each interaction.
+     */
 
     private List<List<MealyStates>> getPartitions(List<List<MealyStates>> partition) {
         List<List<MealyStates>> newPartition = partitionedMachine(partition);
@@ -51,6 +64,12 @@ public class MealyServiceImpl implements MealyService {
             return getPartitions(newPartition);
         return newPartition;
     }
+
+    /**
+     *
+     * @param mealy Mealy's machine from which you want to obtain the input alphabet.
+     * @return
+     */
 
     private List<List<String>> getStimulus(Mealy mealy) {
         List<List<String>> stimulus = new ArrayList<>();
@@ -63,11 +82,23 @@ public class MealyServiceImpl implements MealyService {
         return stimulus;
     }
 
+    /**
+     * Returns the list of inputs or stimuli received by the states of the Mealy machine.
+     * @param mealyStates Initial state of the Mealy machine state list
+     * @return the list of inputs of the Mealy machine.
+     */
+
     private List<String> getStimulus(MealyStates mealyStates) {
         List<String> stimulus = new ArrayList<>();
         mealyStates.getStates().forEach(s -> stimulus.add(s.getResponse()));
         return stimulus;
     }
+
+    /**
+     * Returns Mealy's machine with the first partition according to the outputs of the states
+     * @param mealy Mealy machine to be partitioned
+     * @return Set of state blocks of the Mealy machine representing the initial partition
+     */
 
     private List<List<MealyStates>> getInitialPartition(Mealy mealy) {
         List<List<MealyStates>> partition = new ArrayList<>();
@@ -84,7 +115,11 @@ public class MealyServiceImpl implements MealyService {
         return partition;
     }
 
-
+    /**
+     *
+     * @param partition
+     * @return
+     */
 
     private List<List<MealyStates>> partitionedMachine(List<List<MealyStates>> partition) {
         List<List<MealyStates>> newPartition = new ArrayList<>();
@@ -126,6 +161,14 @@ public class MealyServiceImpl implements MealyService {
         return newPartition;
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @param partition
+     * @return
+     */
+
     private boolean searchGroups(MealyState a, MealyState b, List<List<MealyStates>> partition) {
         for (List<MealyStates> list : partition) {
             if (list.stream().anyMatch(e -> e.getRoot().equals(a.getState())) &&
@@ -135,6 +178,13 @@ public class MealyServiceImpl implements MealyService {
         return false;
     }
 
+    /**
+     *
+     * @param states
+     * @param actualState
+     * @param mealy
+     */
+
     private void searchStatesFromInitial(List<String> states, String actualState, Mealy mealy) {
         List<MealyState> relations = mealy.searchRelationsStates(actualState);
         relations.forEach(relation -> {
@@ -143,11 +193,25 @@ public class MealyServiceImpl implements MealyService {
         });
     }
 
+    /**
+     *
+     * @param mealy
+     * @param initialState
+     * @return
+     */
+
     private List<String> getStatesWithoutInitial(Mealy mealy, String initialState) {
         List<String> states = mealy.getStates().stream().map(MealyStates::getRoot).collect(Collectors.toList());
         states.remove(initialState);
         return states;
     }
+
+    /**
+     *
+     * @param partition
+     * @param mealy
+     * @return
+     */
 
     private Mealy createNewMealy(List<List<MealyStates>> partition, Mealy mealy) {
         String prefix = "q";
