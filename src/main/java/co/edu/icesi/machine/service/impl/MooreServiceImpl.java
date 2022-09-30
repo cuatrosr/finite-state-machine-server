@@ -55,11 +55,22 @@ public class MooreServiceImpl implements MooreService {
         return res;
     }
 
-
+    /**
+     * Base method that calls the recursive method that performs the partitioning of the Moore machine
+     * @param moore Moore machine to be partitioned
+     * @return Set of state blocks of the Moore machine representing the final partition
+     */
 
     private List<List<MooreState>> partitionMoore(Moore moore, List<String> responses) {
         return getPartitions(getInitialPartition(moore, responses));
     }
+
+    /**
+     * Recursive method that implements the partitioning algorithm,
+     * reviewing the outputs of each state and grouping them together.
+     * @param partition Set of state blocks of the Moore machine representing each one of the partitions
+     * @return the set of state blocks of the Moore machine representing the partition in each interaction.
+     */
 
     private List<List<MooreState>> getPartitions(List<List<MooreState>> partition) {
         List<List<MooreState>> newPartition = partitionedMachine(partition);
@@ -67,6 +78,13 @@ public class MooreServiceImpl implements MooreService {
             return getPartitions(newPartition);
         return newPartition;
     }
+
+    /**
+     * Search the relations between the Moore's machine states.
+     * @param states set of states of the Moore's machine.
+     * @param actualState actual state
+     * @param moore Moore's machine.
+     */
 
     private void searchStatesFromInitial(List<String> states, String actualState, Moore moore) {
         List<String> relations = moore.searchRelationsStates(actualState);
@@ -76,11 +94,25 @@ public class MooreServiceImpl implements MooreService {
         });
     }
 
+    /**
+     * Get the set o states of a moore machine without the initial state
+     * @param moore Moore machine
+     * @param initialState the initial's state value of the Moore machine
+     * @return the states of a Moore machine without the initial state
+     */
+
     private List<String> getStatesWithoutInitial(Moore moore, String initialState) {
         List<String> states = moore.getStates().stream().map(MooreState::getRoot).collect(Collectors.toList());
         states.remove(initialState);
         return states;
     }
+
+    /**
+     * Returns Moore's machine with the first partition according to the outputs of the states.
+     * @param moore moore machine
+     * @param responses outputs of each state of the moore machine.
+     * @return Set of state blocks of the Mealy machine representing the initial partition.
+     */
 
     private List<List<MooreState>> getInitialPartition(Moore moore, List<String> responses) {
         List<List<MooreState>> partition = new ArrayList<>();
@@ -96,6 +128,12 @@ public class MooreServiceImpl implements MooreService {
         );
         return partition;
     }
+
+    /**
+     * Partitioning algorithm
+     * @param partition partition of the Moore's machine
+     * @return set of Moore States's lists
+     */
 
     private List<List<MooreState>> partitionedMachine(List<List<MooreState>> partition) {
         List<List<MooreState>> newPartition = new ArrayList<>();
@@ -137,6 +175,14 @@ public class MooreServiceImpl implements MooreService {
         return newPartition;
     }
 
+    /**
+     *  Find the groups containing the initial states of each machine.
+     * @param a list o Moore's states
+     * @param b list o Moore's states
+     * @param partition partition of the Moore's machine
+     * @return a boolean value if the groups found have the initial states
+     */
+
     private boolean searchGroups(String a, String b, List<List<MooreState>> partition) {
         for (List<MooreState> list : partition) {
             if (list.stream().anyMatch(e -> e.getRoot().equals(a)) &&
@@ -145,6 +191,13 @@ public class MooreServiceImpl implements MooreService {
         }
         return false;
     }
+
+    /**
+     * Create a new moore machine
+     * @param partition
+     * @param moore
+     * @return the construction of the moore machine.
+     */
 
     private Moore createNewMoore(List<List<MooreState>> partition, Moore moore) {
         String prefix = "q";

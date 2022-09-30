@@ -66,9 +66,9 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
+     * The alphabet symbols for the Mealy machine are obtained.
      * @param mealy Mealy's machine from which you want to obtain the input alphabet.
-     * @return
+     * @return the stimulus's list of the Mealy's machine.
      */
 
     private List<List<String>> getStimulus(Mealy mealy) {
@@ -116,9 +116,9 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
-     * @param partition
-     * @return
+     * Partitioning algorithm
+     * @param partition partition of the Mealy's machine
+     * @return set of Mealy States's lists
      */
 
     private List<List<MealyStates>> partitionedMachine(List<List<MealyStates>> partition) {
@@ -162,11 +162,11 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
-     * @param a
-     * @param b
-     * @param partition
-     * @return
+     *  Find the groups containing the initial states of each machine.
+     * @param a list o Mealy's states
+     * @param b list o Mealy's states
+     * @param partition partition of the Mealy's machine
+     * @return a boolean value if the groups found have the initial states
      */
 
     private boolean searchGroups(MealyState a, MealyState b, List<List<MealyStates>> partition) {
@@ -179,10 +179,10 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
-     * @param states
-     * @param actualState
-     * @param mealy
+     * Search the relations between the Mealy's machine states.
+     * @param states set of states of the Mealy's machine.
+     * @param actualState actual state
+     * @param mealy Mealy's machine.
      */
 
     private void searchStatesFromInitial(List<String> states, String actualState, Mealy mealy) {
@@ -194,10 +194,10 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
-     * @param mealy
-     * @param initialState
-     * @return
+     * Get the set o states of a mealy machine without the initial state
+     * @param mealy Mealy machine
+     * @param initialState the initial's state value of the Mealy machine
+     * @return the states of a Mealy machine without the initial state
      */
 
     private List<String> getStatesWithoutInitial(Mealy mealy, String initialState) {
@@ -207,10 +207,10 @@ public class MealyServiceImpl implements MealyService {
     }
 
     /**
-     *
+     * Create a new mealy machine
      * @param partition
      * @param mealy
-     * @return
+     * @return the construction of the mealy machine.
      */
 
     private Mealy createNewMealy(List<List<MealyStates>> partition, Mealy mealy) {
