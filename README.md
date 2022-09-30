@@ -15,7 +15,7 @@
 </div>
 
 ## ***Instructions***📓
-🔸 - **Link: [Instructions Documentation]**
+🔸 - **Link: [Instructions Documentation](https://github.com/cuatrosr/finite-state-machine-server/blob/a7c5b3700c6b97af46582db6ea3dfc38aca60668/docs/Instructions%20for%20use%20of%20the%20program.pdf)**
 
 
 ## ***Versioned*** 📌
