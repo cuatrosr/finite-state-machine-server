@@ -14,10 +14,6 @@
     </p>
 </div>
 
-## ***Instructions***📓
-🔸 - **Link: [Instructions Documentation](https://github.com/cuatrosr/finite-state-machine-server/blob/a7c5b3700c6b97af46582db6ea3dfc38aca60668/docs/Instructions%20for%20use%20of%20the%20program.pdf)**
-
-
 ## ***Versioned*** 📌
 
 <div style="text-align: left">
@@ -95,9 +91,7 @@
 }
 ```
 
-*There's a postman collection for test purposes [here]()*
-
-## ***Author*** ✒️
+## ***Authors*** ✒️
 
 <div style="text-align: left">
     <a href="https://github.com/cuatrosr" target="_blank"> <img alt="cuatrosr" src="https://images.weserv.nl/?url=avatars.githubusercontent.com/u/70908378?v=4&h=60&w=60&fit=cover&mask=circle"></a>
